@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Hotel</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .section-title {
+            color: white;
+            padding: 8px;
+            font-weight: bold;
+        }
+        .sec1 { background-color: #2e7d32; }
+        .sec2 { background-color: #1565c0; }
+        .sec3 { background-color: #c62828; }
+        .sec4 { background-color: #6a1b9a; }
+        .sec5 { background-color: #ef6c00; }
+        .sec6 { background-color: #00897b; }
+        .sec7 { background-color: #ef6c00; }
+        .sec8 { background-color: #37474f; }
+    </style>
+</head>
+
+<body class="container mt-4">
+
+<h2 class="text-center mb-4">✏️ Edit Hotel</h2>
+
+<input type="hidden" id="hotel_id" value="{{data.id}}">
+
+<!-- SECTION 1 -->
+<!-- SECTION 1 -->
+<div class="section-title sec1">Section 1: Hotel Information</div>
+
+<div class="row mt-2">
+
+    <!-- LEFT -->
+    <div class="col-md-6">
+
+        <label class="form-label">Hotel Name</label>
+        <input id="hotel_name" value="{{data.hotel_name}}" class="form-control mb-2">
+
+        <label class="form-label">City</label>
+        <input id="city" value="{{data.city}}" class="form-control mb-2">
+
+        <label class="form-label">Complete Address</label>
+        <textarea id="address" class="form-control mb-2">{{data.address}}</textarea>
+
+        <label class="form-label">Website</label>
+        <input id="website" value="{{data.website}}" class="form-control mb-2">
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col-md-6">
+
+        <label class="form-label">Star Category</label>
+        <select id="star_category" class="form-control mb-2">
+            <option value="">Select Category</option>
+            <option {% if data.star_category=='3 Star' %}selected{% endif %}>3 Star</option>
+            <option {% if data.star_category=='4 Star' %}selected{% endif %}>4 Star</option>
+            <option {% if data.star_category=='5 Star' %}selected{% endif %}>5 Star</option>
+        </select>
+
+        <label class="form-label">State / Country</label>
+        <input id="state" value="{{data.state}}" class="form-control mb-2">
+
+        <label class="form-label">GST Number</label>
+        <input id="gst" value="{{data.gst}}" class="form-control mb-2">
+
+    </div>
+
+</div>
+
+<!-- SECTION 2 -->
+<div class="section-title sec2 mt-3">Section 2: Contact Information</div>
+
+<div class="table-responsive">
+<table class="table table-bordered">
+
+<thead>
+<tr>
+<th>Department</th>
+<th>Name</th>
+<th>Phone</th>
+<th>Email</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Reception</td>
+<td><input id="rec_name" value="{{data.contacts.reception.name}}" class="form-control"></td>
+<td><input id="rec_phone" value="{{data.contacts.reception.phone}}" class="form-control"></td>
+<td><input id="rec_email" value="{{data.contacts.reception.email}}" class="form-control"></td>
+</tr>
+
+<tr>
+<td>Sales</td>
+<td><input id="sales_name" value="{{data.contacts.sales.name}}" class="form-control"></td>
+<td><input id="sales_phone" value="{{data.contacts.sales.phone}}" class="form-control"></td>
+<td><input id="sales_email" value="{{data.contacts.sales.email}}" class="form-control"></td>
+</tr>
+
+<tr>
+<td>Reservations</td>
+<td><input id="res_name" value="{{data.contacts.reservations.name}}" class="form-control"></td>
+<td><input id="res_phone" value="{{data.contacts.reservations.phone}}" class="form-control"></td>
+<td><input id="res_email" value="{{data.contacts.reservations.email}}" class="form-control"></td>
+</tr>
+
+<tr>
+<td>Accounts</td>
+<td><input id="acc_name" value="{{data.contacts.accounts.name}}" class="form-control"></td>
+<td><input id="acc_phone" value="{{data.contacts.accounts.phone}}" class="form-control"></td>
+<td><input id="acc_email" value="{{data.contacts.accounts.email}}" class="form-control"></td>
+</tr>
+
+<tr>
+<td>General Manager</td>
+<td><input id="gm_name" value="{{data.contacts.gm.name}}" class="form-control"></td>
+<td><input id="gm_phone" value="{{data.contacts.gm.phone}}" class="form-control"></td>
+<td><input id="gm_email" value="{{data.contacts.gm.email}}" class="form-control"></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<!-- SECTION 3 (RATE CARD) -->
+<div class="section-title sec3 mt-3">Section 3: Rate Card</div>
+
+<div class="table-responsive">
+<table id="rateTable" class="table table-bordered">
+<tbody>
+
+{% for i in range(data.rates|length) %}
+<tr>
+<td>{{data.rates[i].room}}</td>
+<td>{{data.rates[i].season}}</td>
+
+<td><input value="{{data.rates[i].ep}}"></td>
+<td><input value="{{data.rates[i].cp}}"></td>
+<td><input value="{{data.rates[i].map}}"></td>
+<td><input value="{{data.rates[i].ap}}"></td>
+
+<td><input value="{{data.rates[i].extra_adult_ep}}"></td>
+<td><input value="{{data.rates[i].extra_adult_cp}}"></td>
+<td><input value="{{data.rates[i].extra_adult_map}}"></td>
+<td><input value="{{data.rates[i].extra_adult_ap}}"></td>
+
+<td><input value="{{data.rates[i].child_ep}}"></td>
+<td><input value="{{data.rates[i].child_cp}}"></td>
+<td><input value="{{data.rates[i].child_map}}"></td>
+
+<td><input value="{{data.rates[i].extra_bed_ep}}"></td>
+<td><input value="{{data.rates[i].extra_bed_cp}}"></td>
+<td><input value="{{data.rates[i].extra_bed_map}}"></td>
+<td><input value="{{data.rates[i].extra_bed_apai}}"></td>
+</tr>
+{% endfor %}
+
+</tbody>
+</table>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section-title sec4 mt-3">Section 4: Seasons</div>
+
+<table id="seasonTable" class="table table-bordered">
+<tbody>
+
+{% for i in range(data.seasons|length) %}
+<tr>
+<td>{{data.seasons[i].season}}</td>
+
+<td>
+<input type="date" value="{{data.seasons[i].p1_from}}">
+<input type="date" value="{{data.seasons[i].p1_to}}">
+</td>
+
+<td>
+<input type="date" value="{{data.seasons[i].p2_from}}">
+<input type="date" value="{{data.seasons[i].p2_to}}">
+</td>
+
+<td>
+<input type="date" value="{{data.seasons[i].p3_from}}">
+<input type="date" value="{{data.seasons[i].p3_to}}">
+</td>
+</tr>
+{% endfor %}
+
+</tbody>
+</table>
+
+<!-- SECTION 5 -->
+<div class="section-title sec5">SECTION 5: POLICIES & TERMS</div>
+
+<div class="table-responsive">
+<table class="table table-bordered">
+
+<tr>
+    <td><b>Check-in Time</b></td>
+    <td><input id="checkin" value="{{data.policies.checkin}}" class="form-control"></td>
+
+    <td><b>Check-out Time</b></td>
+    <td><input id="checkout" value="{{data.policies.checkout}}" class="form-control"></td>
+</tr>
+
+<tr>
+    <td><b>Child Policy (Free Stay Age)</b></td>
+    <td><input id="child_policy" value="{{data.policies.child_policy}}" class="form-control"></td>
+
+    <td><b>Early Check-in Policy</b></td>
+    <td><input id="early_checkin" value="{{data.policies.early_checkin}}" class="form-control"></td>
+</tr>
+
+<tr>
+    <td><b>Cancellation Policy</b></td>
+    <td><textarea id="cancellation" class="form-control">{{data.policies.cancellation}}</textarea></td>
+
+    <td><b>Freshen Up Facility/Cost</b></td>
+    <td><input id="freshen_up" value="{{data.policies.freshen_up}}" class="form-control"></td>
+</tr>
+
+<tr>
+    <td><b>Payment Terms</b></td>
+    <td colspan="3">
+        <textarea id="payment_terms" class="form-control">{{data.policies.payment_terms}}</textarea>
+    </td>
+</tr>
+
+<tr>
+    <td><b>Number of Keys</b></td>
+    <td><input id="keys" value="{{data.policies['keys']}}"></td>
+    <td></td>
+    <td></td>
+</tr>
+
+<tr>
+    <td><b>Special Supplements / Surcharges</b></td>
+    <td colspan="3">
+        <textarea id="supplements" class="form-control">{{data.policies.supplements}}</textarea>
+    </td>
+</tr>
+
+</table>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section-title sec6">✅ SECTION 6: HOTEL AMENITIES</div>
+
+<table id="amenityTable" class="table table-bordered">
+
+<tr>
+<td><input type="checkbox" value="Swimming Pool" {% if 'Swimming Pool' in data.amenities %}checked{% endif %}> Swimming Pool</td>
+<td><input type="checkbox" value="Spa & Wellness" {% if 'Spa & Wellness' in data.amenities %}checked{% endif %}> Spa & Wellness</td>
+<td><input type="checkbox" value="Fitness Center" {% if 'Fitness Center' in data.amenities %}checked{% endif %}> Fitness Center</td>
+<td><input type="checkbox" value="Restaurant" {% if 'Restaurant' in data.amenities %}checked{% endif %}> Restaurant</td>
+<td><input type="checkbox" value="Bar/Lounge" {% if 'Bar/Lounge' in data.amenities %}checked{% endif %}> Bar/Lounge</td>
+<td><input type="checkbox" value="Room Service" {% if 'Room Service' in data.amenities %}checked{% endif %}> Room Service</td>
+</tr>
+
+<tr>
+<td><input type="checkbox" value="Free WiFi" {% if 'Free WiFi' in data.amenities %}checked{% endif %}> Free WiFi</td>
+<td><input type="checkbox" value="Parking" {% if 'Parking' in data.amenities %}checked{% endif %}> Parking</td>
+<td><input type="checkbox" value="Airport Transfer" {% if 'Airport Transfer' in data.amenities %}checked{% endif %}> Airport Transfer</td>
+<td><input type="checkbox" value="Conference Room" {% if 'Conference Room' in data.amenities %}checked{% endif %}> Conference Room</td>
+<td><input type="checkbox" value="Business Center" {% if 'Business Center' in data.amenities %}checked{% endif %}> Business Center</td>
+<td><input type="checkbox" value="Laundry" {% if 'Laundry' in data.amenities %}checked{% endif %}> Laundry</td>
+</tr>
+
+<tr>
+<td><input type="checkbox" value="Kids Play Area" {% if 'Kids Play Area' in data.amenities %}checked{% endif %}> Kids Play Area</td>
+<td><input type="checkbox" value="Beach Access" {% if 'Beach Access' in data.amenities %}checked{% endif %}> Beach Access</td>
+<td><input type="checkbox" value="Garden/Lawn" {% if 'Garden/Lawn' in data.amenities %}checked{% endif %}> Garden/Lawn</td>
+<td><input type="checkbox" value="Banquet Hall" {% if 'Banquet Hall' in data.amenities %}checked{% endif %}> Banquet Hall</td>
+<td><input type="checkbox" value="Travel Desk" {% if 'Travel Desk' in data.amenities %}checked{% endif %}> Travel Desk</td>
+<td><input type="checkbox" value="Doctor on Call" {% if 'Doctor on Call' in data.amenities %}checked{% endif %}> Doctor on Call</td>
+</tr>
+
+</table>
+
+<!-- SECTION 7 -->
+<div class="section-title sec7">🏦 SECTION 7: BANK / PAYMENT DETAILS</div>
+
+<div class="table-responsive">
+<table id="bankTable" class="table table-bordered">
+
+<tr>
+    <td><b>Bank Name</b></td>
+    <td><input id="bank_name" value="{{data.bank.bank_name}}" class="form-control"></td>
+
+    <td><b>Branch</b></td>
+    <td><input id="branch" value="{{data.bank.branch}}" class="form-control"></td>
+</tr>
+
+<tr>
+    <td><b>Account Name</b></td>
+    <td><input id="account_name" value="{{data.bank.account_name}}" class="form-control"></td>
+
+    <td><b>Account Number</b></td>
+    <td><input id="account_number" value="{{data.bank.account_number}}" class="form-control"></td>
+</tr>
+
+<tr>
+    <td><b>IFSC / SWIFT Code</b></td>
+    <td><input id="ifsc" value="{{data.bank.ifsc}}" class="form-control"></td>
+
+    <td><b>Currency Preference</b></td>
+    <td>
+        <input type="checkbox" value="INR" {% if 'INR' in data.bank.currency %}checked{% endif %}> INR
+        <input type="checkbox" value="USD" {% if 'USD' in data.bank.currency %}checked{% endif %}> USD
+        <input type="checkbox" value="Local Currency" {% if 'Local Currency' in data.bank.currency %}checked{% endif %}> Local Currency
+    </td>
+</tr>
+
+<tr>
+    <td><b>Preferred Payment Method</b></td>
+    <td colspan="3">
+        <input type="checkbox" value="Bank Transfer" {% if 'Bank Transfer' in data.bank.payment_methods %}checked{% endif %}> Bank Transfer
+        <input type="checkbox" value="UPI" {% if 'UPI' in data.bank.payment_methods %}checked{% endif %}> UPI
+        <input type="checkbox" value="PayPal" {% if 'PayPal' in data.bank.payment_methods %}checked{% endif %}> PayPal
+        <input type="checkbox" value="Wire Transfer" {% if 'Wire Transfer' in data.bank.payment_methods %}checked{% endif %}> Wire Transfer
+        <input type="checkbox" value="Credit Card" {% if 'Credit Card' in data.bank.payment_methods %}checked{% endif %}> Credit Card
+    </td>
+</tr>
+
+</table>
+</div>
+<!-- SECTION 8 -->
+<div class="section-title sec8">SECTION 8: AUTHORIZATION & SIGNATURE</div>
+
+<div class="table-responsive">
+<table class="table table-bordered">
+
+<tr>
+    <td><b>Authorized Person Name</b></td>
+    <td><input id="auth_name" value="{{data.authorization.auth_name}}" class="form-control"></td>
+
+    <td><b>Designation</b></td>
+    <td><input id="designation" value="{{data.authorization.designation}}" class="form-control"></td>
+</tr>
+
+<tr>
+    <td><b>Contact Number</b></td>
+    <td><input id="auth_phone" value="{{data.authorization.auth_phone}}" class="form-control"></td>
+
+    <td><b>Email</b></td>
+    <td><input id="auth_email" value="{{data.authorization.auth_email}}" class="form-control"></td>
+</tr>
+
+<tr>
+    <td><b>Date</b></td>
+    <td>
+        <input type="date" id="auth_date" value="{{data.authorization.auth_date}}" class="form-control">
+    </td>
+</tr>
+
+<tr>
+    <td><b>Authorized Signature</b></td>
+    <td colspan="3">
+        <input id="signature" value="{{data.authorization.signature}}" class="form-control">
+    </td>
+</tr>
+
+</table>
+</div>
+
+<!-- BUTTON -->
+<div class="text-center mt-4">
+<button onclick="updateForm()" class="btn btn-warning btn-lg">Update</button>
+</div>
+
+<script>
+function updateForm(){
+
+let id = document.getElementById("hotel_id").value;
+
+// ✅ SECTION 2: Contacts
+let contacts = {
+    reception: {
+        name: rec_name.value,
+        phone: rec_phone.value,
+        email: rec_email.value
+    },
+    sales: {
+        name: sales_name.value,
+        phone: sales_phone.value,
+        email: sales_email.value
+    },
+    reservations: {
+        name: res_name.value,
+        phone: res_phone.value,
+        email: res_email.value
+    },
+    accounts: {
+        name: acc_name.value,
+        phone: acc_phone.value,
+        email: acc_email.value
+    },
+    gm: {
+        name: gm_name.value,
+        phone: gm_phone.value,
+        email: gm_email.value
+    }
+};
+
+// ✅ SECTION 6: Amenities
+let amenities=[];
+document.querySelectorAll('#amenityTable input:checked')
+    .forEach(cb => amenities.push(cb.value));
+
+
+// ✅ SECTION 3: Full Rate Card (ALL columns ✅)
+let rates=[];
+document.querySelectorAll('#rateTable tbody tr').forEach(row =>{
+
+    let cells=row.querySelectorAll("input");
+
+    rates.push({
+        room: row.children[0].innerText.trim(),
+        season: row.children[1].innerText.trim(),
+
+        ep:cells[0]?.value || "",
+        cp:cells[1]?.value || "",
+        map:cells[2]?.value || "",
+        ap:cells[3]?.value || "",
+
+        extra_adult_ep:cells[4]?.value || "",
+        extra_adult_cp:cells[5]?.value || "",
+        extra_adult_map:cells[6]?.value || "",
+        extra_adult_ap:cells[7]?.value || "",
+
+        child_ep:cells[8]?.value || "",
+        child_cp:cells[9]?.value || "",
+        child_map:cells[10]?.value || "",
+
+        extra_bed_ep:cells[11]?.value || "",
+        extra_bed_cp:cells[12]?.value || "",
+        extra_bed_map:cells[13]?.value || "",
+        extra_bed_apai:cells[14]?.value || ""
+    });
+});
+
+
+// ✅ SECTION 4: Season Data
+let seasons=[];
+document.querySelectorAll('#seasonTable tbody tr').forEach(row=>{
+
+    let inputs=row.querySelectorAll("input");
+
+    seasons.push({
+        season: row.children[0].innerText.trim(),
+
+        p1_from:inputs[0]?.value || "",
+        p1_to:inputs[1]?.value || "",
+        p2_from:inputs[2]?.value || "",
+        p2_to:inputs[3]?.value || "",
+        p3_from:inputs[4]?.value || "",
+        p3_to:inputs[5]?.value || ""
+    });
+});
+
+
+// ✅ SECTION 7: Bank
+let currency=[];
+let payment_methods=[];
+
+document.querySelectorAll("#bankTable input[type=checkbox]").forEach(cb=>{
+    if(cb.checked){
+        if(["INR","USD","Local Currency"].includes(cb.value)){
+            currency.push(cb.value);
+        } else {
+            payment_methods.push(cb.value);
+        }
+    }
+});
+
+let bank={
+    bank_name:bank_name.value,
+    branch:branch.value,
+    account_name:account_name.value,
+    account_number:account_number.value,
+    ifsc:ifsc.value,
+    currency:currency,
+    payment_methods:payment_methods
+};
+
+
+// ✅ SECTION 5: Policies
+let policies={
+    checkin:checkin.value,
+    checkout:checkout.value,
+    child_policy:child_policy.value,
+    early_checkin:early_checkin.value,
+    cancellation:cancellation.value,
+    freshen_up:freshen_up.value,
+    payment_terms:payment_terms.value,
+    keys:keys.value,
+    supplements:supplements.value
+};
+
+
+// ✅ SECTION 8: Authorization
+let authorization={
+    auth_name:auth_name.value,
+    designation:designation.value,
+    auth_phone:auth_phone.value,
+    auth_email:auth_email.value,
+    auth_date:auth_date.value,
+    signature:signature.value
+};
+
+
+// ✅ FINAL API CALL
+fetch('/update/' + id, {
+    method: 'POST',
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+
+        // ✅ Section 1
+        hotel_name: hotel_name.value,
+        city: city.value,
+        address: address.value,
+        website: website.value,
+        star_category: star_category.value,
+        state: state.value,
+        gst: gst.value,
+        contacts: contacts, //Section2 Contacts
+
+        // ✅ Section 5
+        checkin: checkin.value,
+        checkout: checkout.value,
+        policies: policies,
+
+        // ✅ Section 6
+        amenities: amenities,
+
+        // ✅ Section 3 + 4
+        rates: rates,
+        seasons: seasons,
+
+        // ✅ Section 7 + 8
+        bank: bank,
+        authorization: authorization
+    })
+})
+.then(res => res.json())
+.then(data=>{
+    alert(data.message);
+    window.location.href="/search";
+});
+
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Hotel</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .section-title {
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .sec1 { background: #2e7d32; }
+        .sec2 { background: #1565c0; }
+        .sec3 { background: #c62828; }
+        .sec4 { background: #6a1b9a; }
+        .sec5 { background: #ef6c00; }
+
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+
+</head>
+
+<body class="container mt-4">
+
+<h2 class="text-center mb-4">🏨 Hotel Details</h2>
+
+<!-- BASIC INFO -->
+<div class="card">
+<div class="section-title sec1">Hotel Information</div>
+
+<div class="row p-3">
+
+    <!-- LEFT -->
+    <div class="col-md-6">
+
+        <label class="form-label">Registration ID</label>
+        <input class="form-control mb-2" value="{{data.registration_id}}" disabled>
+
+        <label class="form-label">Reference Number</label>
+        <input class="form-control mb-2" value="{{data.reference_number}}" disabled>
+
+        <label class="form-label">Hotel Name</label>
+        <input class="form-control mb-2" value="{{data.hotel_name}}" disabled>
+
+        <label class="form-label">City</label>
+        <input class="form-control mb-2" value="{{data.city}}" disabled>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col-md-6">
+
+        <label class="form-label">State / Country</label>
+        <input class="form-control mb-2" value="{{data.state}}" disabled>
+
+        <label class="form-label">Address</label>
+        <textarea class="form-control mb-2" disabled>{{data.address}}</textarea>
+
+        <label class="form-label">Website</label>
+        <input class="form-control mb-2" value="{{data.website}}" disabled>
+
+        <label class="form-label">Star Category</label>
+        <input class="form-control mb-2" value="{{data.star_category}}" disabled>
+
+    </div>
+
+</div>
+</div>
+
+<!-- SECTION 2  Contact-->
+<div class="card">
+<div class="section-title sec2">Contact Information</div>
+
+<div class="table-responsive">
+<table class="table table-bordered mb-0">
+
+<tr>
+<th>Department</th>
+<th>Name</th>
+<th>Phone</th>
+<th>Email</th>
+</tr>
+
+<tr>
+<td>Reception</td>
+<td>{{data.contacts.reception.name}}</td>
+<td>{{data.contacts.reception.phone}}</td>
+<td>{{data.contacts.reception.email}}</td>
+</tr>
+
+<tr>
+<td>Sales</td>
+<td>{{data.contacts.sales.name}}</td>
+<td>{{data.contacts.sales.phone}}</td>
+<td>{{data.contacts.sales.email}}</td>
+</tr>
+
+<tr>
+<td>Reservations</td>
+<td>{{data.contacts.reservations.name}}</td>
+<td>{{data.contacts.reservations.phone}}</td>
+<td>{{data.contacts.reservations.email}}</td>
+</tr>
+
+<tr>
+<td>Accounts</td>
+<td>{{data.contacts.accounts.name}}</td>
+<td>{{data.contacts.accounts.phone}}</td>
+<td>{{data.contacts.accounts.email}}</td>
+</tr>
+
+<tr>
+<td>General Manager</td>
+<td>{{data.contacts.gm.name}}</td>
+<td>{{data.contacts.gm.phone}}</td>
+<td>{{data.contacts.gm.email}}</td>
+</tr>
+
+</table>
+</div>
+</div>
+
+<!-- AMENITIES -->
+<div class="card">
+<div class="section-title sec2">Amenities</div>
+
+<div class="p-3">
+{% for a in data.amenities %}
+<span class="badge bg-success m-1">{{a}}</span>
+{% endfor %}
+</div>
+</div>
+
+<!-- POLICIES -->
+<div class="card">
+<div class="section-title sec3">Policies</div>
+
+<table class="table table-bordered mb-0">
+<tr><td>Check-in</td><td>{{data.policies.checkin}}</td></tr>
+<tr><td>Check-out</td><td>{{data.policies.checkout}}</td></tr>
+<tr><td>Child Policy</td><td>{{data.policies.child_policy}}</td></tr>
+<tr><td>Early Check-in</td><td>{{data.policies.early_checkin}}</td></tr>
+<tr><td>Cancellation</td><td>{{data.policies.cancellation}}</td></tr>
+<tr><td>Payment Terms</td><td>{{data.policies.payment_terms}}</td></tr>
+<tr><td>Supplements</td><td>{{data.policies.supplements}}</td></tr>
+</table>
+</div>
+
+<!-- BANK -->
+<div class="card">
+<div class="section-title sec4">Bank Details</div>
+
+<table class="table table-bordered mb-0">
+<tr><td>Bank Name</td><td>{{data.bank.bank_name}}</td></tr>
+<tr><td>Account Number</td><td>{{data.bank.account_number}}</td></tr>
+<tr><td>IFSC</td><td>{{data.bank.ifsc}}</td></tr>
+
+<tr>
+<td>Currency</td>
+<td>
+{% if data.bank.currency and data.bank.currency|length > 0 %}
+    {{ data.bank.currency | join(', ') }}
+{% else %}
+    NA
+{% endif %}
+</td>
+</tr>
+
+<tr>
+<td>Payment Methods</td>
+<td>
+{% if data.bank.payment_methods and data.bank.payment_methods|length > 0 %}
+    {{ data.bank.payment_methods | join(', ') }}
+{% else %}
+    NA
+{% endif %}
+</td>
+</tr>
+</table>
+</div>
+
+<!-- SEASONS -->
+<div class="card">
+<div class="section-title sec5">Season Definitions</div>
+
+<table class="table table-bordered mb-0">
+<tr>
+<th>Season</th>
+<th>Period 1</th>
+<th>Period 2</th>
+<th>Period 3</th>
+</tr>
+
+{% for s in data.seasons %}
+<tr>
+<td>{{s.season}}</td>
+<td>{{s.p1_from}} → {{s.p1_to}}</td>
+<td>{{s.p2_from}} → {{s.p2_to}}</td>
+<td>{{s.p3_from}} → {{s.p3_to}}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+
+<!-- RATE CARD -->
+
+<div class="card">
+<div class="section-title sec3">Rate Card</div>
+
+<div class="table-responsive">
+<table class="table table-bordered">
+
+<tr>
+<th>Room</th>
+<th>Season</th>
+
+<th>EP</th>
+<th>CP</th>
+<th>MAP</th>
+<th>AP</th>
+
+<th>Extra Adult EP</th>
+<th>Extra Adult CP</th>
+<th>Extra Adult MAP</th>
+<th>Extra Adult AP</th>
+
+<th>Child EP</th>
+<th>Child CP</th>
+<th>Child MAP</th>
+
+<th>Extra Bed EP</th>
+<th>Extra Bed CP</th>
+<th>Extra Bed MAP</th>
+<th>Extra Bed APAI</th>
+</tr>
+
+{% if data.rates and data.rates|length > 0 %}
+    {% for r in data.rates %}
+<tr>
+<td>{{ r.room }}</td>
+<td>{{ r.season }}</td>
+
+<td>{{ r.ep }}</td>
+<td>{{ r.cp }}</td>
+<td>{{ r.map }}</td>
+<td>{{ r.ap }}</td>
+
+<td>{{ r.extra_adult_ep }}</td>
+<td>{{ r.extra_adult_cp }}</td>
+<td>{{ r.extra_adult_map }}</td>
+<td>{{ r.extra_adult_ap }}</td>
+
+<td>{{ r.child_ep }}</td>
+<td>{{ r.child_cp }}</td>
+<td>{{ r.child_map }}</td>
+
+<td>{{ r.extra_bed_ep }}</td>
+<td>{{ r.extra_bed_cp }}</td>
+<td>{{ r.extra_bed_map }}</td>
+<td>{{ r.extra_bed_apai }}</td>
+</tr>
+    {% endfor %}
+{% else %}
+<tr>
+<td colspan="17">No rate data available</td>
+</tr>
+{% endif %}
+
+</table>
+</div>
+
+<!-- AUTH -->
+<div class="card">
+<div class="section-title sec2">Authorization</div>
+
+<table class="table table-bordered mb-0">
+<tr><td>Name</td><td>{{data.authorization.auth_name}}</td></tr>
+<tr><td>Designation</td><td>{{data.authorization.designation}}</td></tr>
+<tr><td>Phone</td><td>{{data.authorization.auth_phone}}</td></tr>
+<tr><td>Email</td><td>{{data.authorization.auth_email}}</td></tr>
+<tr><td>Date</td><td>{{data.authorization.auth_date}}</td></tr>
+</table>
+</div>
+
+<!-- BUTTON -->
+<div class="text-center mt-3">
+<a href="/search" class="btn btn-secondary">⬅ Back to Search</a>
+</div>
+
+</body>
+</html>
+<!-- EDIT BUTTON -->
+<div class="card">
+    <div class="section-title sec1 d-flex justify-content-between align-items-center">
+        <span>Hotel Information</span>
+        <a href="/edit/{{data.id}}" class="btn btn-light btn-sm">✏️ Edit</a>
+    </div>
